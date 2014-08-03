@@ -10,6 +10,9 @@
         'jquery': 'jquery/jquery/1.10.1/jquery',
 
         'alert': 'pandora/dialog/1.0.0/alert',
+        // 请使用 Widget.autoRender
+        // 下一版取消支持独立的 autoRender 调用
+        'autorender': 'pandora/widget/1.0.0/autorender',
         'base': 'pandora/base/1.0.0/base',
         'class': 'pandora/class/1.0.0/class',
         'confirm': 'pandora/dialog/1.0.0/confirm',
