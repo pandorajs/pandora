@@ -50,8 +50,19 @@ module.exports = function(grunt) {
     clean: {
       dist: {
         files: {
-          src: ['dist/**/*']
+          src: ['dist/*.*']
         }
+      }
+    },
+
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'dist/',
+          src: ['*.js'],
+          dest: 'sea-modules/pandora/'
+        }]
       }
     },
 
@@ -85,6 +96,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('default', ['test', 'build']);
+  grunt.registerTask('default', ['test', 'build', 'copy']);
 
 };
