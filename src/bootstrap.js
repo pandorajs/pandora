@@ -25,6 +25,10 @@
         'tips': 'pandora/dialog/1.0.0/tips',
         'validate': 'pandora/validate/1.0.0/validate',
         'widget': 'pandora/widget/1.0.0/widget',
+        'mood' : 'pandora/mood/1.0.0/mood',
+        'share' : 'pandora/share/1.0.0/share',
+        'viewpoint' : 'pandora/viewpoint/1.0.0/viewpoint',
+        'changyan' : 'pandora/changyan/1.0.0/changyan',
 
         'handlebars': 'gallery/handlebars/1.3.0/handlebars-runtime'
       }
