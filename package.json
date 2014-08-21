@@ -45,6 +45,7 @@
       "$": "jquery/jquery/1.11.1/jquery",
 
       "alert": "pandora/dialog/1.0.0/alert",
+      "article": "pandora/article/1.0.0/article",
       "autorender": "pandora/widget/1.0.0/autorender",
       "base": "pandora/base/1.0.0/base",
       "changyan" : "pandora/changyan/1.0.0/changyan",

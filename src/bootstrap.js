@@ -10,6 +10,7 @@
         'jquery': 'jquery/jquery/1.11.1/jquery',
 
         'alert': 'pandora/dialog/1.0.0/alert',
+        'article': 'pandora/article/1.0.0/article',
         // 请使用 Widget.autoRender
         // 下一版取消支持独立的 autoRender 调用
         'autorender': 'pandora/widget/1.0.0/autorender',
