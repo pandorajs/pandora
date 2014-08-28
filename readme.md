@@ -2,14 +2,15 @@
 
  > pandora 启动脚本
 
-## 更新模块
+## 用法
 
-  - 修改 `package.json` 中的 `spm.alias`
-  - 修改 `src/pandora.js` 中的 `alias`
+  1. 引入 `//ue.17173cdn.com/a/lib/pandora.js`
+  1. `pandora.use(['$', 'mood'], function($, Mood) { /* hello pandora */ });`
 
-## 更新记录
+## 更新依赖模块
 
-  - 1.0.0 - release
+  1. 修改 `package.json` 中的 `spm.alias`
+  1. 修改 `src/pandora.js` 中的 `alias`
 
 ## 附录：开发指引
 
