@@ -1,10 +1,39 @@
 (function(window, undefined) {
 
-  var libPath = '//ue.17173cdn.com/a/lib/';
+  'use strict';
+
+  // sea 模块根目录
+  var LIB_PATH = '//ue.17173cdn.com/a/lib/';
+
+  // sea
+  var seajs = window.seajs;
+
+  // 待处理队列
+  var queue = [
+    [['widget'], function(Widget) {
+      Widget.autoRender();
+    }]
+  ];
+
+  var pandora = window.pandora = {
+    use: function(modules, callback) {
+      if (!seajs) {
+        queue.push([modules, callback]);
+      } else {
+        seajs.use(modules, callback);
+      }
+    }
+  };
+
+  // pandora.open = pandora.use;
 
   function init() {
-    window.seajs.config({
-      base: libPath,
+    var task;
+
+    seajs = window.seajs;
+
+    seajs.config({
+      base: LIB_PATH,
       alias: {
         '$': 'jquery/jquery/1.11.1/jquery',
         'jquery': 'jquery/jquery/1.11.1/jquery',
@@ -37,9 +66,10 @@
       }
     });
 
-    window.seajs.use('widget', function(Widget) {
-      Widget.autoRender();
-    });
+    // 处理队列
+    while ((task = queue.shift())) {
+      seajs.use(task[0], task[1]);
+    }
   }
 
   function listen(node, callback) {
@@ -63,7 +93,7 @@
     }
   }
 
-  if (typeof window.seajs === 'undefined') {
+  if (!seajs) {
     var doc = window.document,
       head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement,
       baseElement = head.getElementsByTagName('base')[0],
@@ -74,7 +104,7 @@
     listen(node, init);
 
     node.async = true;
-    node.src = libPath + 'seajs/sea.js';
+    node.src = LIB_PATH + 'seajs/sea.js';
 
     baseElement ?
       head.insertBefore(node, baseElement) :

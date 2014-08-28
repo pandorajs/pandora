@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>bootstrap</title>
+<title>pandora</title>
 <link rel="stylesheet" href="../vendor/qunit/qunit.css">
 </head>
 <body>
@@ -12,14 +12,12 @@
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
   <div id="qunit-fixture">test markup</div>
-  <script src="../vendor/jquery/jquery.js"></script>
-  <script src="../vendor/seajs/sea.js"></script>
   <script src="../vendor/qunit/qunit.js"></script>
-  <script src="../src/bootstrap.js"></script>
+  <script src="../src/pandora.js"></script>
   <script>
     QUnit.config.autostart = false;
 
-    seajs.use('widget', function(Widget) {
+    pandora.use(['$', 'widget'], function($, Widget) {
 
       var form = $('<form data-widget="validate"/>')
           .html('<div class="form-group">' +

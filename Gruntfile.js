@@ -17,8 +17,15 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    exec: {
+      spm: {
+        cwd: './',
+        command: 'spm install'
+      }
+    },
+
     jshint: {
-      files: ['src/*.js'],
+      files: ['src/pandora.js'],
       options: {
         jshintrc: true
       }
@@ -29,13 +36,13 @@ module.exports = function(grunt) {
         '--web-security': 'no',
         coverage: {
           baseUrl: './',
-          src: ['src/*.js'],
+          src: ['src/pandora.js'],
           instrumentedFiles: 'temp/',
           lcovReport: 'report/',
           linesThresholdPct: 60
         }
       },
-      all: ['test/*.html']
+      all: ['test/pandora.html']
     },
 
     coveralls: {
@@ -48,9 +55,14 @@ module.exports = function(grunt) {
     },
 
     clean: {
+      sea: {
+        files: {
+          src: ['sea-modules/**/*', '!sea-modules/.svn']
+        }
+      },
       dist: {
         files: {
-          src: ['dist/*.*']
+          src: ['dist/pandora.js']
         }
       }
     },
@@ -60,8 +72,8 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/',
-          src: ['*.js'],
-          dest: 'sea-modules/pandora/'
+          src: ['pandora.js'],
+          dest: 'sea-modules/'
         }]
       }
     },
@@ -84,7 +96,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'src/',
-          src: ['*.js'],
+          src: ['pandora.js'],
           dest: 'dist/'
         }]
       }
@@ -92,10 +104,12 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build', ['clean', 'uglify']);
+  grunt.registerTask('build', ['clean:dist', 'uglify', 'copy']);
+
+  grunt.registerTask('sync', ['clean:sea', 'exec:spm']);
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('default', ['test', 'build', 'copy']);
+  grunt.registerTask('default', ['test', 'sync', 'build']);
 
 };

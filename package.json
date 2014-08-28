@@ -1,16 +1,16 @@
 {
-  "name": "bootstrap",
+  "name": "pandora",
   "version": "1.0.0",
   "description": "pandora bootstrap script",
   "keywords": [ "bootstrap", "pandora", "seajs" ],
-  "homepage": "https://github.com/pandorajs/bootstrap",
+  "homepage": "https://github.com/pandorajs/pandora",
   "bugs": {
-    "url": "https://github.com/pandorajs/bootstrap/issues"
+    "url": "https://github.com/pandorajs/pandora/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/pandorajs/bootstrap/blob/master/LICENSE-MIT"
+      "url": "https://github.com/pandorajs/pandora/blob/master/LICENSE-MIT"
     }
   ],
   "author": {
@@ -20,7 +20,7 @@
   "main": "Gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pandorajs/bootstrap.git"
+    "url": "git://github.com/pandorajs/pandora.git"
   },
   "scripts": {
     "test": "grunt qunit"
@@ -38,6 +38,7 @@
     "grunt-contrib-uglify": "*",
     "grunt-coveralls": "*",
     "grunt-qunit-istanbul": "*",
+    "grunt-exec": "*",
     "matchdep": "*"
   },
   "spm": {
