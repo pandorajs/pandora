@@ -17,7 +17,17 @@
     // }]
   ];
 
+  /**
+   * pandora
+   * @type {singleton}
+   */
   var pandora = window.pandora = {
+    /**
+     * use
+     * 使用方法同 seajs.use
+     * @param  {array}    modules  依赖模块
+     * @param  {function} callback 待执行函数
+     */
     use: function(modules, callback) {
       if (!seajs) {
         queue.push([modules, callback]);
@@ -62,7 +72,7 @@
     // discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15
     if ( document.readyState === 'complete' ) {
       // Handle it asynchronously to allow scripts the opportunity to delay ready
-      setTimeout( callback );
+      window.setTimeout( callback );
 
     // Standards-based browsers support DOMContentLoaded
     } else if ( document.addEventListener ) {
@@ -97,7 +107,7 @@
               // http://javascript.nwbox.com/IEContentLoaded/
               top.doScroll('left');
             } catch(e) {
-              return setTimeout( doScrollCheck, 50 );
+              return window.setTimeout( doScrollCheck, 50 );
             }
 
             // detach all dom ready events
