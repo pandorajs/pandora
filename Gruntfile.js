@@ -74,6 +74,11 @@ module.exports = function(grunt) {
           cwd: 'dist/',
           src: ['pandora.js'],
           dest: 'sea-modules/'
+        }, {
+          // expand: true,
+          // cwd: 'dist/',
+          src: 'dist/pandora.js',
+          dest: 'sea-modules/pandora/bootstrap.js'
         }]
       }
     },
