@@ -1,6 +1,12 @@
 (function(window, undefined) {
 
   'use strict';
+  
+  /**
+   * Pandora 启动文件
+   * 
+   * @module pandora
+   */
 
   // sea 模块根目录
   var LIB_PATH = '//ue.17173cdn.com/a/lib/';
@@ -11,20 +17,20 @@
   var seajs = window.seajs;
 
   // 待处理队列
-  var queue = [
-    // [['widget'], function(Widget) {
-    //   Widget.autoRender();
-    // }]
-  ];
+  var queue = [];
 
   /**
-   * pandora
-   * @type {singleton}
+   * pandora，暴露到全局
+   * 
+   * @class pandora
    */
   var pandora = window.pandora = {
+
     /**
-     * use
-     * 使用方法同 seajs.use
+     * 同 seajs.use
+     * 如果 seajs 未加载，则缓存数据到队列，以供延迟执行 seajs.use
+     * 
+     * @mehod use
      * @param  {array}    modules  依赖模块
      * @param  {function} callback 待执行函数
      */
@@ -35,10 +41,11 @@
         seajs.use(modules, callback);
       }
     }
+
   };
 
   /**
-   * from jquery 1.11.1
+   * dom ready, from jquery 1.11.1
    */
   function domReady(callback) {
     var isReady = false;
@@ -121,8 +128,7 @@
     }
   }
 
-  // pandora.open = pandora.use;
-
+  // 配置 seajs；处理队列；处理 autoRender
   function init() {
     var task;
 
@@ -175,6 +181,7 @@
     });
   }
 
+  // 侦听脚本加载完毕事件
   function listen(node, callback) {
     var supportOnload = 'onload' in node;
 
@@ -196,6 +203,7 @@
     }
   }
 
+  // 如果 seajs 未存在，加载它
   if (!seajs) {
     var doc = window.document,
       head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement,
