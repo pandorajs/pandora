@@ -1,10 +1,10 @@
 (function(window, undefined) {
 
   'use strict';
-  
+
   /**
    * Pandora 启动文件
-   * 
+   *
    * @module pandora
    */
 
@@ -21,7 +21,7 @@
 
   /**
    * pandora，暴露到全局
-   * 
+   *
    * @class pandora
    */
   var pandora = window.pandora = {
@@ -29,7 +29,7 @@
     /**
      * 同 seajs.use
      * 如果 seajs 未加载，则缓存数据到队列，以供延迟执行 seajs.use
-     * 
+     *
      * @mehod use
      * @param  {array}    modules  依赖模块
      * @param  {function} callback 待执行函数
@@ -157,6 +157,10 @@
         'overlay': 'pandora/overlay/1.0.0/overlay',
         'select': 'pandora/select/1.0.0/select',
         'share' : 'pandora/share/1.0.0/share',
+        'floatshare' : 'pandora/share/1.0.0/floatshare',
+        'multievote' : 'pandora/vote/1.0.0/multievote',
+        'singlevote' : 'pandora/vote/1.0.0/singlevote',
+        'upordown' : 'pandora/vote/1.0.0/upordown',
         'switchable': 'pandora/switchable/1.0.0/switchable',
         'tabs': 'pandora/tabs/1.0.0/tabs',
         'tips': 'pandora/dialog/1.0.0/tips',
