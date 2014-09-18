@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>pandora</title>
+<link rel="stylesheet" href="../vendor/qunit/qunit.css">
+</head>
+<body>
+  <h1 id="qunit-header">QUnit Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  <div id="qunit-fixture">test markup</div>
+  <script src="../vendor/qunit/qunit.js"></script>
+  <script src="../dist/pandora.js"></script>
+  <script>
+    QUnit.config.autostart = false;
+
+    pandora.use(['$', 'widget'], function($, Widget) {
+
+      var form = $('<form data-widget="validate"/>')
+          .html('<div class="form-group">' +
+              '<input type="text" name="test"' +
+              ' required>' +
+              '<input type="submit">' +
+            '</div>')
+          .prependTo('body');
+
+      QUnit.start();
+
+      asyncTest('autoRender', function() {
+        Widget.autoRender(function () {
+          var instance = Widget.get(form),
+              valid;
+
+          instance.on({
+            valid: function () {
+              valid = true;
+              return false;
+            },
+            error: function () {
+              valid = false;
+              return false;
+            }
+          });
+
+          instance.submit();
+          ok( valid === false, '' );
+          ok( form.find('span').text().length > 0, '' );
+          form.find(':text').val('some value');
+          instance.submit();
+          ok( valid === true, '' );
+          ok( form.find('span').text().length === 0, '' );
+
+          instance.destroy();
+          form.remove();
+
+          start();
+        });
+      });
+    });
+
+  </script>
+</body>
+</html>

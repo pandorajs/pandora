@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "grunt": "*",
+    "grunt-text-replace": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",
     "grunt-contrib-jshint": "*",
