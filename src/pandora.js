@@ -11,9 +11,6 @@
   // sea 模块根目录
   var LIB_PATH = '//ue.17173cdn.com/a/lib/';
 
-  // 时间戳，用于避免缓存
-  var TIMESTAMP = '@TIMESTAMP';
-
   var document = window.document;
 
   // sea
@@ -174,7 +171,8 @@
         'handlebars': 'gallery/handlebars/1.3.0/handlebars-runtime'
       },
       map: [
-        [/\.js$/, '.js?' + TIMESTAMP]
+        // 时间戳，用于避免缓存
+        [/\.js$/, '.js?@TIMESTAMP']
       ]
     });
 
