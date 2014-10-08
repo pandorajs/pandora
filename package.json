@@ -60,6 +60,9 @@
       "select": "pandora/select/1.0.0/select",
       "share" : "pandora/share/1.0.0/share",
       "floatshare" : "pandora/share/1.0.0/floatshare",
+      "floating" : "pandora/floating/1.0.0/floating",
+      "floatanchor" : "pandora/floating/1.0.0/floatanchor",
+      "accordion" : "pandora/accordion/1.0.0/accordion",
       "multiplevote" : "pandora/vote/1.0.0/multiplevote",
       "singlevote" : "pandora/vote/1.0.0/singlevote",
       "support" : "pandora/vote/1.0.0/support",
@@ -69,6 +72,8 @@
       "validate": "pandora/validate/1.0.0/validate",
       "viewpoint" : "pandora/viewpoint/1.0.0/viewpoint",
       "widget": "pandora/widget/1.0.0/widget",
+      "statistics" : "pandora/statistics/1.0.0/statistics",
+      "messagebus" : "pandora/messagebus/1.0.0/messagebus",
 
       "handlebars": "gallery/handlebars/1.3.0/handlebars-runtime"
     }

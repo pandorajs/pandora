@@ -39,6 +39,8 @@
         queue.push([modules, callback]);
       } else {
         seajs.use(modules, callback);
+        //统计,如果要统计实例化次数，还需从callback中提取new的次数，但循环中反复调用也只能统计一次.
+        window.messageBus && window.messageBus.fire('useModule',modules);
       }
     }
 
@@ -130,7 +132,7 @@
 
   // 配置 seajs；处理队列；处理 autoRender
   function init() {
-    var task;
+    var task,tmpModules = [];
 
     seajs = window.seajs;
 
@@ -158,6 +160,9 @@
         'select': 'pandora/select/1.0.0/select',
         'share' : 'pandora/share/1.0.0/share',
         'floatshare' : 'pandora/share/1.0.0/floatshare',
+        'floating' : 'pandora/floating/1.0.0/floating',
+        'floatanchor' : 'pandora/floating/1.0.0/floatanchor',
+        'accordion' : 'pandora/accordion/1.0.0/accordion',
         'multiplevote' : 'pandora/vote/1.0.0/multiplevote',
         'singlevote' : 'pandora/vote/1.0.0/singlevote',
         'support' : 'pandora/vote/1.0.0/support',
@@ -167,14 +172,22 @@
         'validate': 'pandora/validate/1.0.0/validate',
         'viewpoint' : 'pandora/viewpoint/1.0.0/viewpoint',
         'widget': 'pandora/widget/1.0.0/widget',
+        'statistics' : 'pandora/statistics/1.0.0/statistics',
+        'messagebus' : 'pandora/messagebus/1.0.0/messagebus',
 
         'handlebars': 'gallery/handlebars/1.3.0/handlebars-runtime'
-      }
+      },
+      map: [
+        // 时间戳，用于避免缓存
+        [/\.js$/, '.js?@TIMESTAMP']
+      ]
     });
+
 
     // 处理队列
     while ((task = queue.shift())) {
       seajs.use(task[0], task[1]);
+      tmpModules.push(task[0]);
     }
 
     // domReady，处理 autoRender
@@ -183,6 +196,15 @@
         Widget.autoRender();
       });
     });
+
+    seajs.use(['messagebus','statistics'],function(MessageBus, Statistics){
+      window.messageBus = new MessageBus();
+      new Statistics();
+      for(var i=0;i<tmpModules.length; i++){
+        window.messageBus.fire('useModule',tmpModules[i]);
+      }
+    });
+
   }
 
   // 侦听脚本加载完毕事件
