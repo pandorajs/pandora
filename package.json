@@ -61,6 +61,7 @@
       "select": "pandora/select/1.0.0/select",
       "share" : "pandora/share/1.0.0/share",
       "floatshare" : "pandora/share/1.0.0/floatshare",
+      "attitude" : "pandora/attitude/1.0.0/attitude",
       "floating" : "pandora/floating/1.0.0/floating",
       "floatanchor" : "pandora/floating/1.0.0/floatanchor",
       "accordion" : "pandora/accordion/1.0.0/accordion",

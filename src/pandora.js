@@ -40,7 +40,7 @@
       } else {
         seajs.use(modules, callback);
         //统计,如果要统计实例化次数，还需从callback中提取new的次数，但循环中反复调用也只能统计一次.
-        window.messageBus && window.messageBus.fire('useModule',modules);
+        //window.messageBus && window.messageBus.fire('useModule',modules);
       }
     }
 
@@ -160,6 +160,7 @@
         'select': 'pandora/select/1.0.0/select',
         'share' : 'pandora/share/1.0.0/share',
         'floatshare' : 'pandora/share/1.0.0/floatshare',
+        'attitude' : 'pandora/attitude/1.0.0/attitude',
         'floating' : 'pandora/floating/1.0.0/floating',
         'floatanchor' : 'pandora/floating/1.0.0/floatanchor',
         'accordion' : 'pandora/accordion/1.0.0/accordion',
@@ -196,7 +197,7 @@
         Widget.autoRender();
       });
     });
-
+    /*
     seajs.use(['messagebus','statistics'],function(MessageBus, Statistics){
       window.messageBus = new MessageBus();
       new Statistics();
@@ -204,6 +205,7 @@
         window.messageBus.fire('useModule',tmpModules[i]);
       }
     });
+   */
 
   }
 
