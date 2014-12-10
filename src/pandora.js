@@ -172,6 +172,7 @@
         'tips': 'pandora/dialog/1.0.0/tips',
         'validate': 'pandora/validate/1.0.0/validate',
         'viewpoint' : 'pandora/viewpoint/1.0.0/viewpoint',
+        'gallery' : 'pandora/gallery/1.0.0/gallery',
         'widget': 'pandora/widget/1.0.0/widget',
         'statistics' : 'pandora/statistics/1.0.0/statistics',
         'messagebus' : 'pandora/messagebus/1.0.0/messagebus',
