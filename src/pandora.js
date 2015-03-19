@@ -11,6 +11,9 @@
   // sea 模块根目录
   var LIB_PATH = '//ue.17173cdn.com/a/lib/';
 
+  //jquery
+  var JQUERY_PATH = 'jquery/jquery/1.11.1/jquery';
+
   var document = window.document;
 
   // sea
@@ -130,17 +133,67 @@
     }
   }
 
+  //OS检测
+  (function(ua){
+    var os = pandora.os = {},
+      android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
+      ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+      ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
+      iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+      wp = ua.match(/Windows Phone ([\d.]+)/),
+      blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/),
+      bb10 = ua.match(/(BB10).*Version\/([\d.]+)/),
+      chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/),
+      firefox = ua.match(/Firefox\/([\d.]+)/),
+      ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^\?]+).*rv:([0-9.].)/),
+      webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/)
+    if (android) os.android = true, os.version = android[2]
+    if (iphone && !ipod) os.ios = os.iphone = true, os.version = iphone[2].replace(/_/g, '.')
+    if (ipad) os.ios = os.ipad = true, os.version = ipad[2].replace(/_/g, '.')
+    if (ipod) os.ios = os.ipod = true, os.version = ipod[3] ? ipod[3].replace(/_/g, '.') : null
+    if (wp) os.wp = true, os.version = wp[1]
+    if (blackberry) os.blackberry = true, os.version = blackberry[2]
+    if (bb10) os.bb10 = true, os.version = bb10[2]
+    if (webview) os.webview = true
+    os.tablet = !!(ipad || (android && !ua.match(/Mobile/)) ||
+      (firefox && ua.match(/Tablet/)) || (ie && !ua.match(/Phone/) && ua.match(/Touch/)))
+    os.phone  = !!(!os.tablet && !os.ipod && (android || iphone || blackberry || bb10 ||
+      (chrome && ua.match(/Android/)) || (chrome && ua.match(/CriOS\/([\d.]+)/)) ||
+      (firefox && ua.match(/Mobile/)) || (ie && ua.match(/Touch/))))
+  })(navigator.userAgent)
+
+
   // 配置 seajs；处理队列；处理 autoRender
   function init() {
     var task,tmpModules = [];
 
+    // 时间戳，用于避免缓存
+    var map = [[/(?!jquery)\.js$/, '.js?@TIMESTAMP']];
+
     seajs = window.seajs;
+
+    //如果外部有jquery1.9及以上版本，则不再加载。
+    if(window.jQuery && window.jQuery.fn.finish){
+      define(LIB_PATH + JQUERY_PATH, [], function() {
+        return window.jQuery;
+      });
+      map = [
+        function(uri) {
+          if(/jquery\.js$/.test(uri)){
+            return uri;
+          }else{
+            return uri.replace(/\.js$/, '.js?@TIMESTAMP');
+          }
+        }
+      ];
+    }
 
     seajs.config({
       base: LIB_PATH,
       alias: {
-        '$': 'jquery/jquery/1.11.1/jquery',
-        'jquery': 'jquery/jquery/1.11.1/jquery',
+        '$': JQUERY_PATH,
+        'jquery': JQUERY_PATH,
+        'zepto': 'zepto/1.1.6/zepto',
 
         'alert': 'pandora/dialog/1.0.0/alert',
         'article': 'pandora/article/1.0.0/article',
@@ -166,7 +219,9 @@
         'accordion' : 'pandora/accordion/1.0.0/accordion',
         'multiplevote' : 'pandora/vote/1.0.0/multiplevote',
         'singlevote' : 'pandora/vote/1.0.0/singlevote',
+        'vote' : 'pandora/vote/1.0.0/vote',
         'support' : 'pandora/vote/1.0.0/support',
+        'supportui' : 'pandora/vote/1.0.0/supportui',
         'switchable': 'pandora/switchable/1.0.0/switchable',
         'tabs': 'pandora/tabs/1.0.0/tabs',
         'tips': 'pandora/dialog/1.0.0/tips',
@@ -177,12 +232,11 @@
         'statistics' : 'pandora/statistics/1.0.0/statistics',
         'messagebus' : 'pandora/messagebus/1.0.0/messagebus',
 
-        'handlebars': 'gallery/handlebars/1.3.0/handlebars-runtime'
+        'handlebars': 'gallery/handlebars/1.3.0/handlebars-runtime',
+
+        'fastclick': 'fastclick_cmd'
       },
-      map: [
-        // 时间戳，用于避免缓存
-        [/\.js$/, '.js?@TIMESTAMP']
-      ]
+      map: map
     });
 
 
@@ -198,6 +252,14 @@
         Widget.autoRender();
       });
     });
+
+    // 移动端执行fastclick
+    if(pandora.os.phone || pandora.os.tablet){
+      seajs.use('fastclick', function(attachFastClick){
+        attachFastClick(document.body);
+      })
+    };
+
     /*
     seajs.use(['messagebus','statistics'],function(MessageBus, Statistics){
       window.messageBus = new MessageBus();
@@ -209,6 +271,7 @@
    */
 
   }
+
 
   // 侦听脚本加载完毕事件
   function listen(node, callback) {
